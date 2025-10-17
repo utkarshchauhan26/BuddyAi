@@ -70,10 +70,10 @@ export default function HomePage() {
       <Header currentTab={tab} onTabChange={setTab} />
       
       {/* Main Content Area */}
-      <div className="mx-2 sm:mx-6 my-4 flex flex-col lg:flex-row gap-4 lg:gap-6 relative z-10">
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-4 lg:gap-6 relative z-10 min-h-[calc(100vh-5rem)]">
         
-        {/* Left Main Content - 65% width on desktop, full width on mobile */}
-        <div className="flex-1 lg:max-w-4xl w-full">
+        {/* Left Main Content - Responsive width */}
+        <div className="flex-1 w-full lg:w-[65%] min-h-0">
           <AnimatePresence mode="wait">
             {tab === "Chat" && (
               <motion.section
@@ -202,13 +202,14 @@ export default function HomePage() {
           </AnimatePresence>
         </div>
 
-        {/* Right Progress Panel - 35% width on desktop, hidden on mobile */}
-                {/* Right Notes Panel - 35% width on desktop, hidden on mobile */}
-        <div className="w-[35%] hidden lg:block">
-          <div className="sticky top-4 space-y-4">
-            <h2 className="text-lg font-semibold text-foreground mb-1">Quick Notes</h2>
-            <p className="text-sm text-muted-foreground mb-4">Capture thoughts quickly 📝</p>
-          <NotesPanel compact />
+        {/* Right Sidebar - Quick Notes for desktop only */}
+        <div className="w-full lg:w-[35%] hidden lg:block">
+          <div className="sticky top-4 space-y-4 h-fit">
+            <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-2">Quick Notes</h2>
+              <p className="text-sm text-muted-foreground mb-4">Capture thoughts quickly 📝</p>
+              <NotesPanel compact />
+            </div>
           </div>
         </div>
       </div>

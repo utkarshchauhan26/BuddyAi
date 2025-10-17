@@ -32,23 +32,24 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/40 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
-        <div className="flex items-center gap-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 sm:gap-4 lg:gap-6 px-2 sm:px-4 lg:px-6 py-3 sm:py-4">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <div className="relative flex-shrink-0">
             <img 
               src="/BuddyAI.png" 
               alt="BuddyAI" 
-              className="h-9 w-9 rounded-lg object-cover shadow-md"
+              className="h-7 w-7 sm:h-9 sm:w-9 rounded-lg object-cover shadow-md"
             />
-            <div className="absolute -bottom-1 -right-1 h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-background"></div>
+            <div className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-green-400 border-2 border-background"></div>
           </div>
-          <div className="flex flex-col">
-            <div className="font-semibold text-lg text-foreground">BuddyAI</div>
-            <div className="text-xs text-muted-foreground">with {botName}</div>
+          <div className="flex flex-col min-w-0">
+            <div className="font-semibold text-sm sm:text-lg text-foreground truncate">BuddyAI</div>
+            <div className="text-xs text-muted-foreground hidden sm:block">with {botName}</div>
           </div>
         </div>
 
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-1">
           {tabs.map((t) => (
             <Button
               key={t}
@@ -66,6 +67,26 @@ export function Header({
             </Button>
           ))}
         </nav>
+
+        {/* Mobile Navigation Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild className="lg:hidden">
+            <Button variant="outline" size="sm" className="px-3">
+              {currentTab}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            {tabs.map((t) => (
+              <DropdownMenuItem 
+                key={t}
+                onClick={() => onTabChange(t)}
+                className={currentTab === t ? "bg-accent" : ""}
+              >
+                {t}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <div className="flex min-w-0 items-center gap-4">
           <div className="hidden sm:block w-36">

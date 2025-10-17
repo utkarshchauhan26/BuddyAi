@@ -333,9 +333,10 @@ function generateRoadmapSteps(goal: string, level: string, timeline: string) {
   return steps.slice(0, stepCount)
 }
 
-// Enhanced AI system for roadmap generation and coaching
+// Enhanced AI system with improved context awareness and formatting
 function generateIntelligentResponse(userText: string): string {
-  const lowerText = userText.toLowerCase()
+  const lowerText = userText.toLowerCase().trim()
+  const wordCount = userText.split(' ').length
   
   // Roadmap generation - enhanced detection
   if (isRoadmapRequest(lowerText)) {
@@ -346,104 +347,487 @@ function generateIntelligentResponse(userText: string): string {
   if (isImportedRoadmap(lowerText)) {
     return handleRoadmapImport(userText)
   }
+
+  // Question detection and handling
+  if (lowerText.includes('?') || lowerText.startsWith('how') || lowerText.startsWith('what') || lowerText.startsWith('why') || lowerText.startsWith('when') || lowerText.startsWith('where')) {
+    return handleQuestionResponse(userText)
+  }
+  
+  // Greeting responses
+  if (lowerText.match(/^(hi|hello|hey|good morning|good afternoon|good evening)/)) {
+    return generateGreetingResponse()
+  }
   
   // Motivation and encouragement
-  if (lowerText.includes('motivat') || lowerText.includes('encourag') || lowerText.includes('inspire')) {
-    return `🌟 **YOU'RE ABSOLUTELY AMAZING!** 
-
-I can see the dedication in your approach - just by asking for help, you're already ahead of most people! 💪
-
-**Remember these truths:**
-🎯 Every expert was once a beginner
-🚀 Progress beats perfection every time
-✨ Small consistent actions create extraordinary results
-🏆 You're building something incredible, step by step
-
-**You've got this!** The fact that you're here, planning and learning, shows you're already on the path to success. Keep going - your future self will thank you! 
-
-What's one small step you can take right now? Let's celebrate that momentum! 🎉`
+  if (lowerText.includes('motivat') || lowerText.includes('discourag') || lowerText.includes('inspire') || lowerText.includes('stuck') || lowerText.includes('overwhelm')) {
+    return generateMotivationResponse(userText)
   }
   
   // Task and productivity help
-  if (lowerText.includes('task') || lowerText.includes('productive') || lowerText.includes('focus')) {
-    return `📋 **PRODUCTIVITY MODE ACTIVATED!**
-
-Looking to crush your tasks? I'm here to help you become unstoppable! 💪
-
-**Quick Wins:**
-🎯 Break big tasks into 15-minute chunks
-⏰ Try the Pomodoro technique (25min focus + 5min break)
-📱 Use the Tasks tab to track everything
-📊 Check Analytics to see your patterns
-
-**Pro Tips:**
-✅ Start with the hardest task when energy is high
-🏆 Celebrate small wins - they add up!
-🚫 Eliminate distractions for deep work
-📈 Track your progress daily
-
-Ready to get productive? Let's start with your most important task right now! 🚀`
+  if (lowerText.includes('task') || lowerText.includes('productive') || lowerText.includes('focus') || lowerText.includes('procrastinat') || lowerText.includes('time management')) {
+    return generateProductivityResponse(userText)
   }
   
   // Learning and skill development
-  if (lowerText.includes('learn') || lowerText.includes('skill') || lowerText.includes('study')) {
-    return `🧠 **LEARNING ACCELERATOR ENGAGED!**
-
-Ready to level up your skills? You're in the perfect place! ✨
-
-**Smart Learning Strategy:**
-📚 Set specific, measurable learning goals
-🎯 Practice consistently > cramming occasionally  
-🔄 Apply what you learn immediately
-📝 Teach others to solidify understanding
-
-**Need a structured approach?** 
-Ask me to "create a roadmap to learn [skill] in [time], [level], [daily time]"
-
-**Example:** "Create a roadmap to learn Python in 3 months, 2 hours daily, I'm a beginner"
-
-What skill are you excited to master? Let's build your learning path! 🚀`
+  if (lowerText.includes('learn') || lowerText.includes('skill') || lowerText.includes('study') || lowerText.includes('course') || lowerText.includes('tutorial')) {
+    return generateLearningResponse(userText)
   }
   
   // Goal setting and planning
-  if (lowerText.includes('goal') || lowerText.includes('plan') || lowerText.includes('achieve')) {
-    return `🎯 **GOAL CRUSHER MODE ACTIVATED!**
+  if (lowerText.includes('goal') || lowerText.includes('plan') || lowerText.includes('achieve') || lowerText.includes('target') || lowerText.includes('objective')) {
+    return generateGoalPlanningResponse(userText)
+  }
 
-I love your ambition! Let's turn those dreams into actionable plans! 💪
+  // Health and wellness
+  if (lowerText.includes('stress') || lowerText.includes('burnout') || lowerText.includes('work-life') || lowerText.includes('balance')) {
+    return generateWellnessResponse(userText)
+  }
 
-**SMART Goal Framework:**
-📊 **Specific** - What exactly do you want?
-📏 **Measurable** - How will you track progress?
-🎯 **Achievable** - Is it realistic with your resources?
-📈 **Relevant** - Does it align with your bigger vision?
-⏰ **Time-bound** - When will you complete it?
-
-**My Tools for Success:**
-🗺️ Create detailed roadmaps
-📋 Break goals into daily tasks
-📊 Track progress with analytics
-🏆 Celebrate milestones
-
-What's your big goal? Share it and I'll help you create a winning strategy! 🚀`
+  // Career and professional development
+  if (lowerText.includes('career') || lowerText.includes('job') || lowerText.includes('interview') || lowerText.includes('resume') || lowerText.includes('professional')) {
+    return generateCareerResponse(userText)
   }
   
-  // Default helpful AI response
-  return `Hey there! 👋 I'm Sara, your AI productivity companion, and I'm excited to help you succeed! ✨
+  // Default contextual response
+  return generateContextualResponse(userText, wordCount)
+}
 
-**I can help you with:**
-🗺️ **Roadmaps** - Create personalized learning paths
-📋 **Tasks** - Organize and track your work  
-📊 **Analytics** - Understand your productivity patterns
-🎯 **Goals** - Plan and achieve your dreams
-💪 **Motivation** - Keep you inspired and focused
+function handleQuestionResponse(userText: string): string {
+  const lowerText = userText.toLowerCase()
+  
+  if (lowerText.includes('how') && (lowerText.includes('productive') || lowerText.includes('efficient'))) {
+    return `💡 **How to Be More Productive**
 
-**Quick Start Ideas:**
+Great question! Here's my proven productivity framework:
+
+## 🎯 **The POWER Method:**
+
+**P** - **Prioritize ruthlessly**
+• Use the 80/20 rule: focus on the 20% that creates 80% of results
+• Tackle your hardest task when energy is highest
+
+**O** - **Organize your environment**  
+• Clear workspace = clear mind
+• Use the Tasks tab to track everything
+
+**W** - **Work in focused blocks**
+• 25-minute Pomodoro sessions
+• Single-task, no multitasking
+
+**E** - **Eliminate distractions**
+• Phone in another room
+• Block social media during work time
+
+**R** - **Reflect and adjust**
+• Check Analytics tab for patterns
+• Celebrate wins, learn from setbacks
+
+## 🚀 **Quick Wins for Today:**
+1. Choose your #1 priority task
+2. Set a 25-minute timer
+3. Work without interruptions
+4. Take a 5-minute break
+5. Repeat!
+
+What's your biggest productivity challenge? Let's solve it together! 💪`
+  }
+  
+  if (lowerText.includes('what') && lowerText.includes('roadmap')) {
+    return `🗺️ **What Are Roadmaps?**
+
+Think of roadmaps as your GPS for learning and achievement! 
+
+## ✨ **What Makes Them Special:**
+
+**Structured Learning Path**
+• Break big goals into manageable steps
+• Clear timeline with milestones
+• Progress tracking built-in
+
+**Personalized to You**
+• Adapted to your current level
+• Considers your available time
+• Matches your learning style
+
+**AI-Powered Intelligence**
+• Dynamic step generation
+• Smart difficulty progression
+• Automatic task creation
+
+## 🎯 **Perfect For:**
+• Learning new skills (coding, languages, etc.)
+• Career transitions
+• Personal development goals
+• Academic subjects
+• Creative projects
+
+## 🚀 **Try It Now:**
+Just say: *"Create a roadmap to learn [your goal] in [timeframe]"*
+
+**Example:** "Create a roadmap to learn Python in 2 months, 1 hour daily, I'm a beginner"
+
+Ready to build your success path? 🌟`
+  }
+
+  // Generic question response
+  return `🤔 **Great Question!**
+
+I'd love to help you with that! Here's what I can assist with:
+
+## 🎯 **My Expertise Areas:**
+
+**📚 Learning & Skills**
+• Roadmap creation for any skill
+• Study strategies and techniques
+• Resource recommendations
+
+**📋 Task Management** 
+• Productivity systems and methods
+• Time blocking and scheduling
+• Focus and concentration tips
+
+**🚀 Goal Achievement**
+• SMART goal setting
+• Action plan development  
+• Progress tracking strategies
+
+**💪 Motivation & Mindset**
+• Overcoming procrastination
+• Building consistency
+• Maintaining momentum
+
+## 💡 **Pro Tip:**
+The more specific your question, the better I can help! Try asking something like:
+• "How do I stay focused while working from home?"
+• "What's the best way to learn JavaScript?"
+• "Help me plan my daily schedule"
+
+What specific challenge can I help you tackle? 🌟`
+}
+
+function generateGreetingResponse(): string {
+  const greetings = [
+    `Hello there! 👋 I'm Sara, your AI productivity companion! 
+
+✨ **Ready to make today amazing?** Here's how I can help:
+
+🎯 **Quick Actions:**
+• Create learning roadmaps
+• Organize your tasks  
+• Get motivated and focused
+• Track your progress
+
+💡 **Try saying:**
 • "Create a roadmap to learn [skill]"
 • "Help me plan my day"
 • "I need some motivation"
-• "How can I be more productive?"
 
-What would you like to tackle first? I'm here to make it happen! 🚀`
+What would you like to accomplish today? Let's make it happen! 🚀`,
+
+    `Hey! 🌟 Welcome to your productivity hub!
+
+I'm Sara, and I'm here to help you crush your goals and build amazing habits! 
+
+## 🚀 **What's on your mind today?**
+
+**Need Focus?** I'll help you prioritize and stay on track
+**Learning Something New?** Let's create a personalized roadmap
+**Feeling Stuck?** I've got motivation and strategies ready
+**Want to Plan?** I'll help you organize and schedule
+
+**Just tell me what you're working towards, and let's turn your dreams into action!** ✨
+
+What's your biggest goal right now? 🎯`,
+  ]
+  
+  return greetings[Math.floor(Math.random() * greetings.length)]
+}
+
+function generateMotivationResponse(userText: string): string {
+  const lowerText = userText.toLowerCase()
+  
+  if (lowerText.includes('overwhelm') || lowerText.includes('too much')) {
+    return `🌊 **Feeling Overwhelmed? Let's Break It Down!**
+
+Hey, I totally get it. Sometimes everything feels like too much at once. Let's tackle this together! 💙
+
+## 🛟 **Immediate Relief Strategy:**
+
+**1. Brain Dump (5 minutes)**
+• Write down EVERYTHING on your mind
+• Don't organize, just get it all out
+• This alone reduces mental load by 40%!
+
+**2. The Rule of 3**
+• Pick only 3 things for today
+• Everything else goes to "tomorrow" or "later"
+• Focus creates calm
+
+**3. Start Microscopic**  
+• Choose the tiniest possible first step
+• Just 2 minutes of action
+• Motion creates momentum
+
+## 💪 **Remember:**
+• You don't have to do everything today
+• Progress beats perfection, always
+• You've overcome 100% of your tough days so far
+
+**What's ONE small thing you could do right now?** Just one. Let's start there. 🌟`
+  }
+  
+  return `🌟 **YOU'RE ABSOLUTELY INCREDIBLE!** 
+
+I can feel your determination - that's the energy of someone destined for greatness! 💫
+
+## 🔥 **Truth Bombs for Champions:**
+
+**🎯 Every Expert Started as a Beginner**
+• The only difference between you and your heroes? They kept going
+• Your "failure" is just data for your success
+
+**🚀 Small Actions = Big Results**
+• 1% better each day = 37x better in a year
+• Consistency beats intensity every time
+• You're building something amazing, brick by brick
+
+**✨ You're Already Winning**
+• Seeking help shows wisdom, not weakness
+• Planning ahead puts you in the top 5%
+• Your future self is cheering you on right now!
+
+## 💪 **Energy Boost Activated:**
+
+What's one thing you're proud of accomplishing recently? Let's celebrate that momentum and use it to power your next move! 
+
+**You've got this, champion!** 🏆✨`
+}
+
+function generateProductivityResponse(userText: string): string {
+  return `🚀 **PRODUCTIVITY POWERHOUSE ACTIVATED!**
+
+Ready to become unstoppable? Let's turn you into a productivity machine! ⚡
+
+## 🎯 **The Ultimate Productivity Stack:**
+
+### **🔥 Energy Management (Most Important!)**
+• **Peak hours:** Tackle hardest tasks when energy is highest
+• **Energy vampires:** Identify and eliminate what drains you  
+• **Recovery rituals:** Schedule breaks like appointments
+
+### **⏰ Time Mastery Techniques**
+• **Time blocking:** Assign specific hours to specific tasks
+• **Pomodoro Power:** 25 min focus + 5 min break cycles
+• **Batch similar tasks:** Group emails, calls, admin work
+
+### **🎪 Focus Enhancement**
+• **Environment design:** Clear space = clear mind
+• **Digital minimalism:** Close unnecessary tabs/apps
+• **The 2-minute rule:** If it takes <2 min, do it now
+
+### **📊 Progress Tracking**  
+• Use the **Tasks tab** for daily organization
+• Check **Analytics** to spot your patterns
+• Celebrate small wins (they compound!)
+
+## 🚀 **Quick Start Challenge:**
+Choose your #1 priority task right now. Set a 25-minute timer. Go crush it! 
+
+What's your biggest productivity blocker? Let's eliminate it together! 💪✨`
+}
+
+function generateLearningResponse(userText: string): string {
+  return `🧠 **LEARNING ACCELERATOR ENGAGED!**
+
+Ready to become a learning machine? You're in for an incredible journey! 🚀
+
+## ✨ **The Science-Backed Learning Framework:**
+
+### **📚 Active Learning Strategies**
+• **Teach what you learn:** Explain concepts aloud or write them out
+• **Practice recall:** Test yourself without looking at notes
+• **Spaced repetition:** Review material at increasing intervals
+
+### **🎯 Effective Study Methods**
+• **The Feynman Technique:** Explain complex topics in simple terms
+• **Interleaving:** Mix different types of problems/concepts
+• **Elaborative interrogation:** Ask yourself "why" and "how"
+
+### **🔄 Habit Formation**
+• **Consistency > Intensity:** 30 min daily beats 5 hours once
+• **Learning chains:** Link new knowledge to what you know
+• **Environment cues:** Designate specific learning spaces
+
+### **🗺️ Structured Approach**
+Need a complete learning path? Just ask me to create a personalized roadmap!
+
+**Example:** "Create a roadmap to learn Python in 3 months, 1 hour daily, I'm a beginner"
+
+## 🚀 **Pro Learning Hacks:**
+• Study before sleep (better retention)
+• Use the Pomodoro technique for focus
+• Join communities related to your topic
+• Build projects, don't just consume content
+
+What skill are you excited to master? Let's design your learning journey! 🌟📖`
+}
+
+function generateGoalPlanningResponse(userText: string): string {
+  return `🎯 **GOAL ACHIEVEMENT SYSTEM ACTIVATED!**
+
+Time to turn your dreams into your reality! Let's build an unstoppable plan! 💪
+
+## 🏆 **The SMART-ER Goal Framework:**
+
+### **📊 SMART Foundation**
+• **S**pecific: Crystal clear what you want
+• **M**easurable: Track progress with numbers  
+• **A**chievable: Challenging but realistic
+• **R**elevant: Aligned with your bigger vision
+• **T**ime-bound: Clear deadline for urgency
+
+### **🚀 ER Enhancement**  
+• **E**valuate: Regular progress reviews
+• **R**eadjust: Adapt based on what you learn
+
+## 🛠️ **Goal Planning Toolkit:**
+
+### **🔥 90-Day Sprint Method**
+• Break big goals into 90-day chunks
+• Focus creates momentum and results
+• Regular review and adjustment cycles
+
+### **📋 Daily Actions System**
+• Identify 3 key daily actions
+• Use the **Tasks tab** to track progress
+• Celebrate daily wins (compound effect!)
+
+### **🗺️ Milestone Mapping**
+• Create checkpoints every 2-3 weeks
+• Plan rewards for hitting milestones
+• Use **Analytics** to track patterns
+
+## 💡 **Goal Acceleration Secrets:**
+• Write goals daily (increases success by 42%)
+• Share with accountability partner
+• Visualize success for 5 minutes daily
+• Plan for obstacles before they happen
+
+**What's your biggest goal right now?** Let's create an action plan that guarantees success! 🌟🎯`
+}
+
+function generateWellnessResponse(userText: string): string {
+  return `🌿 **WELLNESS & BALANCE MODE ACTIVATED!**
+
+Taking care of yourself isn't selfish—it's strategic! Let's optimize your well-being for peak performance! 💚
+
+## 🧘 **The Balanced Achiever Framework:**
+
+### **⚡ Energy Management**
+• **Sleep optimization:** 7-9 hours, consistent schedule
+• **Nutrition fuel:** Eat for sustained energy, not quick fixes
+• **Movement medicine:** Even 10-minute walks boost creativity by 60%
+
+### **🧠 Stress Mastery**
+• **Breathing technique:** 4-7-8 method (inhale 4, hold 7, exhale 8)
+• **Boundary setting:** Learn to say "no" to protect your "yes"
+• **Mindfulness moments:** 5-minute meditation breaks
+
+### **🎯 Work-Life Integration**
+• **Transition rituals:** Clear start/stop work boundaries
+• **Energy zones:** Match tasks to your natural rhythms
+• **Recovery time:** Schedule downtime like important meetings
+
+### **💪 Burnout Prevention**
+• **Early warning signs:** Recognize fatigue, cynicism, reduced performance
+• **Micro-recovery:** 2-minute breaks every hour
+• **Passion projects:** Pursue activities that energize you
+
+## 🌟 **Daily Wellness Stack:**
+1. **Morning:** 5-minute stretch or meditation
+2. **Work:** Pomodoro breaks with movement
+3. **Evening:** Device-free wind-down routine
+
+**Remember:** You can't pour from an empty cup. Self-care enables sustainable success!
+
+What aspect of wellness needs your attention today? 🌱✨`
+}
+
+function generateCareerResponse(userText: string): string {
+  return `🚀 **CAREER ACCELERATION HUB!**
+
+Ready to level up your professional game? Let's build your career success story! 💼✨
+
+## 🎯 **Strategic Career Development:**
+
+### **📈 Skill Investment Strategy**
+• **Future-proof skills:** AI literacy, emotional intelligence, adaptability
+• **Industry research:** Stay ahead of trends in your field
+• **Cross-functional knowledge:** Understand adjacent departments
+
+### **🌐 Network Power Building**
+• **Quality > Quantity:** Build genuine relationships
+• **Value-first approach:** Help others before asking for help
+• **Digital presence:** LinkedIn optimization and thought leadership
+
+### **💡 Personal Brand Excellence**
+• **Define your unique value:** What makes you irreplaceable?
+• **Document achievements:** Quantify your impact with metrics
+• **Storytelling mastery:** Craft compelling career narratives
+
+### **🎪 Interview & Opportunity Prep**
+• **STAR method:** Situation, Task, Action, Result stories ready
+• **Questions prepared:** Research-based, thoughtful inquiries
+• **Confidence building:** Practice and preparation reduce anxiety
+
+## 🏆 **Career Acceleration Tactics:**
+• **Skill roadmaps:** Ask me to create learning paths for career goals
+• **Side projects:** Build portfolio pieces that showcase abilities
+• **Mentorship:** Find guides who've walked your desired path
+• **Continuous learning:** Industry certifications and courses
+
+**What's your next career move?** Let's create a strategic plan to make it happen! 
+
+*Try: "Create a roadmap to become a [role] in [timeframe]"* 🌟🚀`
+}
+
+function generateContextualResponse(userText: string, wordCount: number): string {
+  if (wordCount > 20) {
+    return `📝 **I hear you!** Thanks for sharing those details with me.
+
+Based on what you've told me, I can help you with personalized strategies and actionable steps. 
+
+## 🎯 **Here's how we can tackle this together:**
+
+**📋 Break it down:** Let's turn this into manageable action items
+**🗺️ Create a roadmap:** I can design a step-by-step plan  
+**📊 Track progress:** Use our tools to monitor your journey
+**💪 Stay motivated:** I'll keep you inspired and focused
+
+**What's the most important thing you'd like to focus on first?** Let's start there and build momentum! 🚀✨`
+  }
+  
+  return `👋 **Hey there!** I'm Sara, your AI productivity companion!
+
+I'm here to help you achieve amazing things! ✨
+
+## 🚀 **I specialize in:**
+
+**🗺️ Learning Roadmaps** - Personalized step-by-step learning paths
+**📋 Task Management** - Organization and productivity strategies  
+**🎯 Goal Achievement** - Turn dreams into actionable plans
+**💪 Motivation** - Keep you inspired and moving forward
+**📊 Progress Tracking** - Monitor and celebrate your growth
+
+## 💡 **Try asking me:**
+• *"Create a roadmap to learn [skill] in [timeframe]"*
+• *"Help me organize my daily tasks"*
+• *"I need motivation to stay focused"*
+• *"How can I be more productive?"*
+
+**What would you like to work on today?** I'm here to help you succeed! 🌟
+
+*P.S. The more specific you are, the better I can help you!* 😊`
 }
 
 export async function POST(request: NextRequest) {
