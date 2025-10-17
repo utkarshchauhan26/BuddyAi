@@ -36,24 +36,24 @@ export function ProgressPanel({ compact = false }: { compact?: boolean }) {
   if (!mounted) {
     // Return skeleton/placeholder during SSR to prevent hydration mismatch
     return (
-      <Card className="p-6 rounded-3xl border border-amber-500/20 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-xl shadow-2xl shadow-amber-500/5">
+      <Card className="p-4 sm:p-6 rounded-3xl border border-amber-500/20 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-xl shadow-2xl shadow-amber-500/5">
         <div className="mb-3">
-          <h3 className="text-lg font-semibold">Progress</h3>
-          <p className="text-sm text-muted-foreground">
+          <h3 className="text-base sm:text-lg font-semibold">Progress</h3>
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Loading...
           </p>
         </div>
         <div className="mb-4 grid grid-cols-3 gap-2 text-center">
-          <div className="rounded-lg border border-border bg-secondary/40 p-3">
-            <div className="text-xl font-semibold">-</div>
+          <div className="rounded-lg border border-border bg-secondary/40 p-2 sm:p-3">
+            <div className="text-lg sm:text-xl font-semibold">-</div>
             <div className="text-xs text-muted-foreground">Sessions</div>
           </div>
-          <div className="rounded-lg border border-border bg-secondary/40 p-3">
-            <div className="text-xl font-semibold">-</div>
+          <div className="rounded-lg border border-border bg-secondary/40 p-2 sm:p-3">
+            <div className="text-lg sm:text-xl font-semibold">-</div>
             <div className="text-xs text-muted-foreground">Streak</div>
           </div>
-          <div className="rounded-lg border border-border bg-secondary/40 p-3">
-            <div className="text-xl font-semibold">-</div>
+          <div className="rounded-lg border border-border bg-secondary/40 p-2 sm:p-3">
+            <div className="text-lg sm:text-xl font-semibold">-</div>
             <div className="text-xs text-muted-foreground">Tasks/Wk</div>
           </div>
         </div>
@@ -82,10 +82,10 @@ export function ProgressPanel({ compact = false }: { compact?: boolean }) {
   ]
 
   return (
-    <Card className="p-6 rounded-3xl border border-amber-500/20 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-xl shadow-2xl shadow-amber-500/5">
+    <Card className="p-4 sm:p-6 rounded-3xl border border-amber-500/20 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-xl shadow-2xl shadow-amber-500/5">
       <div className="mb-3">
-        <h3 className="text-lg font-semibold">Progress</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="text-base sm:text-lg font-semibold">Progress</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Level {level} • {xp}/{nextLevelXP} XP • Streak {streak}🔥
         </p>
       </div>
@@ -106,7 +106,7 @@ export function ProgressPanel({ compact = false }: { compact?: boolean }) {
                 <Bar dataKey="count" fill="var(--primary)" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="mt-3 text-xs sm:text-sm text-muted-foreground">
               You were{" "}
               {weekly && weekly.length
                 ? Math.round((weekly.filter((d) => d.count > 0).length / weekly.length) * 100)
@@ -115,9 +115,9 @@ export function ProgressPanel({ compact = false }: { compact?: boolean }) {
             </p>
           </div>
           <div className="mt-4">
-            <h4 className="mb-2 text-sm font-medium">Achievements</h4>
+            <h4 className="mb-2 text-xs sm:text-sm font-medium">Achievements</h4>
             <TooltipProvider>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {achievements.map((a) => (
                   <Tooltip key={a.key}>
                     <TooltipTrigger asChild>
@@ -148,8 +148,8 @@ export function ProgressPanel({ compact = false }: { compact?: boolean }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-secondary/40 p-3">
-      <div className="text-xl font-semibold">{value}</div>
+    <div className="rounded-lg border border-border bg-secondary/40 p-2 sm:p-3">
+      <div className="text-lg sm:text-xl font-semibold">{value}</div>
       <div className="text-xs text-muted-foreground">{label}</div>
     </div>
   )

@@ -78,44 +78,45 @@ export function SettingsPanel() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Profile Section */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <User className="h-5 w-5" />
+      <Card className="p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
+          <User className="h-4 w-4 sm:h-5 sm:w-5" />
           Profile
         </h3>
         
-        <div className="flex items-start gap-4">
-          <Avatar className="h-16 w-16">
-            <AvatarFallback className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xl">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
+          <Avatar className="h-14 w-14 sm:h-16 sm:w-16 mx-auto sm:mx-0">
+            <AvatarFallback className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-lg sm:text-xl">
               {user?.user_metadata?.full_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
           
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4 w-full">
             <div className="space-y-2">
-              <Label htmlFor="profile-name">Full Name</Label>
+              <Label htmlFor="profile-name" className="text-sm sm:text-base">Full Name</Label>
               <Input
                 id="profile-name"
                 value={profileName}
                 onChange={(e) => setProfileName(e.target.value)}
                 placeholder="Enter your full name"
+                className="text-sm sm:text-base"
               />
             </div>
             
             <div className="space-y-2">
-              <Label>Email</Label>
+              <Label className="text-sm sm:text-base">Email</Label>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                {user?.email}
+                <span className="break-all">{user?.email}</span>
               </div>
             </div>
             
             <Button 
               onClick={handleUpdateProfile}
               disabled={updating || !profileName.trim()}
-              className="bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-black"
+              className="bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-black w-full sm:w-auto text-sm sm:text-base"
             >
               {updating ? "Updating..." : "Update Profile"}
             </Button>
@@ -133,23 +134,24 @@ export function SettingsPanel() {
       </Card>
 
       {/* App Settings */}
-      <Card className="space-y-4 p-4 rounded-2xl">
-        <h3 className="text-lg font-semibold">App Settings</h3>
+      <Card className="space-y-4 p-4 sm:p-6 rounded-2xl">
+        <h3 className="text-base sm:text-lg font-semibold">App Settings</h3>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
         <div className="space-y-2">
-          <Label>Bot Name</Label>
+          <Label className="text-sm sm:text-base">Bot Name</Label>
           <Input
             value={settings.botName ?? "Mentor"}
             onChange={(e) => setLocal({ ...settings, botName: e.target.value })}
             aria-label="Bot name"
+            className="text-sm sm:text-base"
           />
         </div>
 
         <div className="space-y-2">
-          <Label>AI Tone</Label>
+          <Label className="text-sm sm:text-base">AI Tone</Label>
           <Select value={settings.tone} onValueChange={(v) => setLocal({ ...settings, tone: v as Settings["tone"] })}>
-            <SelectTrigger>
+            <SelectTrigger className="text-sm sm:text-base">
               <SelectValue placeholder="Select tone" />
             </SelectTrigger>
             <SelectContent>
@@ -163,12 +165,12 @@ export function SettingsPanel() {
         </div>
 
         <div className="space-y-2">
-          <Label>Theme Color</Label>
+          <Label className="text-sm sm:text-base">Theme Color</Label>
           <Select
             value={settings.themeColor ?? "amber"}
             onValueChange={(v) => setLocal({ ...settings, themeColor: v as Settings["themeColor"] })}
           >
-            <SelectTrigger>
+            <SelectTrigger className="text-sm sm:text-base">
               <SelectValue placeholder="Select theme color" />
             </SelectTrigger>
             <SelectContent>
@@ -182,8 +184,8 @@ export function SettingsPanel() {
         </div>
 
         <div className="flex items-center justify-between rounded-lg border border-border p-3">
-          <div>
-            <Label className="mb-1 block">Gamification</Label>
+          <div className="flex-1 pr-3">
+            <Label className="mb-1 block text-sm sm:text-base">Gamification</Label>
             <p className="text-xs text-muted-foreground">Toggle XP, levels, achievements.</p>
           </div>
           <Switch
@@ -193,8 +195,8 @@ export function SettingsPanel() {
         </div>
 
         <div className="flex items-center justify-between rounded-lg border border-border p-3">
-          <div>
-            <Label className="mb-1 block">Reminders</Label>
+          <div className="flex-1 pr-3">
+            <Label className="mb-1 block text-sm sm:text-base">Reminders</Label>
             <p className="text-xs text-muted-foreground">Enable focus reminders at set times.</p>
           </div>
           <Switch checked={settings.reminders} onCheckedChange={(v) => setLocal({ ...settings, reminders: !!v })} />

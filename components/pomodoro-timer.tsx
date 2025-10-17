@@ -53,33 +53,35 @@ export function PomodoroTimer() {
   const secs = String(seconds % 60).padStart(2, "0")
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 sm:p-6">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Pomodoro</h3>
-        <span className="text-sm text-muted-foreground">{sessions?.length ?? 0} sessions</span>
+        <h3 className="text-base sm:text-lg font-semibold">Pomodoro</h3>
+        <span className="text-xs sm:text-sm text-muted-foreground">{sessions?.length ?? 0} sessions</span>
       </div>
 
       <motion.div
         initial={{ scale: 0.98 }}
         animate={{ scale: running ? 1 : 0.98 }}
         transition={{ type: "spring", stiffness: 120, damping: 12 }}
-        className="mb-3 flex items-center justify-center rounded-xl border border-amber-500/20 bg-secondary/40 p-6"
+        className="mb-3 flex items-center justify-center rounded-xl border border-amber-500/20 bg-secondary/40 p-4 sm:p-6"
       >
-        <span className="text-4xl font-semibold tabular-nums">
+        <span className="text-2xl sm:text-4xl font-semibold tabular-nums">
           {mins}:{secs}
         </span>
       </motion.div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-center gap-2">
         {!running ? (
           <>
-            <Button onClick={() => start(false)}>Start 25:00</Button>
-            <Button variant="outline" onClick={() => start(true)}>
-              Quick 0:25
+            <Button onClick={() => start(false)} className="w-full sm:w-auto text-sm sm:text-base">
+              <span className="hidden sm:inline">Start </span>25:00
+            </Button>
+            <Button variant="outline" onClick={() => start(true)} className="w-full sm:w-auto text-sm sm:text-base">
+              <span className="hidden sm:inline">Quick </span>0:25
             </Button>
           </>
         ) : (
-          <Button variant="destructive" onClick={reset}>
+          <Button variant="destructive" onClick={reset} className="w-full sm:w-auto text-sm sm:text-base">
             Stop
           </Button>
         )}

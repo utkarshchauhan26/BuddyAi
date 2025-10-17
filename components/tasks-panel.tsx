@@ -209,52 +209,52 @@ export function TasksPanel() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-500/20 rounded-lg">
-              <Target className="h-4 w-4 text-blue-400" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <Card className="p-3 sm:p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 bg-blue-500/20 rounded-lg">
+              <Target className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-blue-400">{tasks.length}</div>
+              <div className="text-lg sm:text-2xl font-bold text-blue-400">{tasks.length}</div>
               <div className="text-xs text-muted-foreground">Total Tasks</div>
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-500/20 rounded-lg">
-              <CheckCircle2 className="h-4 w-4 text-green-400" />
+        <Card className="p-3 sm:p-4 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 bg-green-500/20 rounded-lg">
+              <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-green-400">{completedTasks.length}</div>
+              <div className="text-lg sm:text-2xl font-bold text-green-400">{completedTasks.length}</div>
               <div className="text-xs text-muted-foreground">Completed</div>
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-amber-500/20 rounded-lg">
-              <Timer className="h-4 w-4 text-amber-400" />
+        <Card className="p-3 sm:p-4 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 bg-amber-500/20 rounded-lg">
+              <Timer className="h-3 w-3 sm:h-4 sm:w-4 text-amber-400" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-amber-400">{activeTasks.length}</div>
+              <div className="text-lg sm:text-2xl font-bold text-amber-400">{activeTasks.length}</div>
               <div className="text-xs text-muted-foreground">Pending</div>
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-500/20 rounded-lg">
-              <TrendingUp className="h-4 w-4 text-purple-400" />
+        <Card className="p-3 sm:p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 bg-purple-500/20 rounded-lg">
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-400">{todayTasks.length}</div>
+              <div className="text-lg sm:text-2xl font-bold text-purple-400">{todayTasks.length}</div>
               <div className="text-xs text-muted-foreground">Today</div>
             </div>
           </div>
@@ -262,140 +262,148 @@ export function TasksPanel() {
       </div>
 
       {/* Quick Add */}
-      <Card className="p-6 bg-gradient-to-br from-background/80 to-background/60 border-amber-500/20">
-        <div className="flex gap-3">
+      <Card className="p-4 sm:p-6 bg-gradient-to-br from-background/80 to-background/60 border-amber-500/20">
+        <div className="flex flex-col sm:flex-row gap-3">
           <Input
             placeholder="Quick add a task..."
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTaskQuick()}
-            className="flex-1 bg-background/80 border-amber-500/20 focus:border-amber-400/50"
+            className="flex-1 bg-background/80 border-amber-500/20 focus:border-amber-400/50 text-sm sm:text-base"
           />
-          <Button onClick={addTaskQuick} className="bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-black">
-            <Plus className="h-4 w-4 mr-2" />
-            Add
-          </Button>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" onClick={resetForm} className="border-amber-500/30 hover:bg-amber-500/10">
-                <Edit3 className="h-4 w-4 mr-2" />
-                Advanced
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>{editingTask ? "Edit Task" : "Create Advanced Task"}</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Title</label>
-                  <Input
-                    value={advTitle}
-                    onChange={(e) => setAdvTitle(e.target.value)}
-                    placeholder="Task title..."
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Notes</label>
-                  <Textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Add detailed notes, steps, or context..."
-                    rows={4}
-                    className="resize-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Category</label>
-                    <Select value={category} onValueChange={setCategory}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="General">General</SelectItem>
-                        <SelectItem value="Work">Work</SelectItem>
-                        <SelectItem value="Personal">Personal</SelectItem>
-                        <SelectItem value="Learning">Learning</SelectItem>
-                        <SelectItem value="Health">Health</SelectItem>
-                        <SelectItem value="Finance">Finance</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Priority</label>
-                    <Select value={priority} onValueChange={(v: any) => setPriority(v)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Low">Low</SelectItem>
-                        <SelectItem value="Medium">Medium</SelectItem>
-                        <SelectItem value="High">High</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Estimate (min)</label>
-                    <Input
-                      type="number"
-                      value={estimate}
-                      onChange={(e) => setEstimate(e.target.value ? Number(e.target.value) : "")}
-                      placeholder="30"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Due Date</label>
-                    <Input
-                      type="date"
-                      value={dueDate}
-                      onChange={(e) => setDueDate(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Progress ({progress}%)</label>
-                    <div className="px-3">
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={progress}
-                        onChange={(e) => setProgress(Number(e.target.value))}
-                        className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer slider"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button onClick={addAdvancedTask}>{editingTask ? "Update" : "Create"} Task</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <div className="flex gap-3">
+            <Button onClick={addTaskQuick} className="bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-black flex-1 sm:flex-none text-sm sm:text-base">
+              <Plus className="h-4 w-4 mr-2" />
+              Add
+            </Button>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" onClick={resetForm} className="border-amber-500/30 hover:bg-amber-500/10 text-sm sm:text-base">
+                  <Edit3 className="h-4 w-4 mr-2" />
+                  <span className="hidden sm:inline">Advanced</span>
+                </Button>
+              </DialogTrigger>
+            </Dialog>
+          </div>
         </div>
       </Card>
 
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-full sm:max-w-2xl mx-2 sm:mx-auto max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-lg sm:text-xl">{editingTask ? "Edit Task" : "Create Advanced Task"}</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Title</label>
+              <Input
+                value={advTitle}
+                onChange={(e) => setAdvTitle(e.target.value)}
+                placeholder="Task title..."
+                className="text-sm sm:text-base"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Notes</label>
+              <Textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Add detailed notes, steps, or context..."
+                rows={4}
+                className="resize-none text-sm sm:text-base"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Category</label>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="text-sm sm:text-base">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="General">General</SelectItem>
+                    <SelectItem value="Work">Work</SelectItem>
+                    <SelectItem value="Personal">Personal</SelectItem>
+                    <SelectItem value="Learning">Learning</SelectItem>
+                    <SelectItem value="Health">Health</SelectItem>
+                    <SelectItem value="Finance">Finance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Priority</label>
+                <Select value={priority} onValueChange={(v: any) => setPriority(v)}>
+                  <SelectTrigger className="text-sm sm:text-base">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="High">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Estimate (min)</label>
+                <Input
+                  type="number"
+                  value={estimate}
+                  onChange={(e) => setEstimate(e.target.value ? Number(e.target.value) : "")}
+                  placeholder="30"
+                  className="text-sm sm:text-base"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Due Date</label>
+                <Input
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="text-sm sm:text-base"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Progress ({progress}%)</label>
+                <div className="px-3">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer slider"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2">
+            <Button variant="outline" onClick={() => setOpen(false)} className="text-sm sm:text-base">Cancel</Button>
+            <Button onClick={addAdvancedTask} className="text-sm sm:text-base">{editingTask ? "Update" : "Create"} Task</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Filters */}
       <Tabs value={filter} onValueChange={(v: any) => setFilter(v)} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="all">All ({tasks.length})</TabsTrigger>
-          <TabsTrigger value="active">Active ({activeTasks.length})</TabsTrigger>
-          <TabsTrigger value="paused">Paused ({pausedTasks.length})</TabsTrigger>
-          <TabsTrigger value="completed">Done ({completedTasks.length})</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+          <TabsTrigger value="all" className="text-xs sm:text-sm">All ({tasks.length})</TabsTrigger>
+          <TabsTrigger value="active" className="text-xs sm:text-sm">Active ({activeTasks.length})</TabsTrigger>
+          <TabsTrigger value="paused" className="text-xs sm:text-sm">Paused ({pausedTasks.length})</TabsTrigger>
+          <TabsTrigger value="completed" className="text-xs sm:text-sm">Done ({completedTasks.length})</TabsTrigger>
         </TabsList>
       </Tabs>
 
       {/* Tasks List */}
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         <AnimatePresence>
           {filteredTasks.map((task, index) => {
             const PriorityIcon = priorityIcons[task.priority || "Medium"]
@@ -410,11 +418,11 @@ export function TasksPanel() {
                 transition={{ delay: index * 0.05 }}
               >
                 <Card className={cn(
-                  "p-6 transition-all duration-200 hover:shadow-lg",
+                  "p-4 sm:p-6 transition-all duration-200 hover:shadow-lg",
                   task.done && "opacity-75 bg-green-500/5 border-green-500/20",
                   isOverdue && "border-red-500/30 bg-red-500/5"
                 )}>
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -426,25 +434,25 @@ export function TasksPanel() {
                       />
                     </motion.div>
 
-                    <div className="flex-1 space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                    <div className="flex-1 space-y-2 sm:space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
                           <h3 className={cn(
-                            "font-medium text-lg leading-relaxed",
+                            "font-medium text-base sm:text-lg leading-relaxed break-words",
                             task.done && "line-through text-muted-foreground"
                           )}>
                             {task.title}
                           </h3>
                           
                           {task.notes && (
-                            <p className="text-sm text-muted-foreground mt-2 bg-muted/30 p-3 rounded-lg">
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-2 bg-muted/30 p-2 sm:p-3 rounded-lg break-words">
                               <FileText className="inline h-3 w-3 mr-1" />
                               {task.notes}
                             </p>
                           )}
                         </div>
 
-                        <div className="flex items-center gap-2 ml-4">
+                        <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0">
                           {/* Status Control Buttons */}
                           {!task.done && task.status !== 'completed' && (
                             <>
@@ -511,7 +519,7 @@ export function TasksPanel() {
                       )}
 
                       {/* Task Meta */}
-                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs">
                         {/* Status Badge */}
                         <Badge variant="outline" className={cn("px-2 py-1", statusColors[task.status || 'active'])}>
                           {(() => {
@@ -565,16 +573,16 @@ export function TasksPanel() {
         </AnimatePresence>
 
         {filteredTasks.length === 0 && (
-          <Card className="p-12 text-center">
+          <Card className="p-8 sm:p-12 text-center">
             <div className="text-muted-foreground">
-              <Target className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-medium mb-2">
+              <Target className="h-8 w-8 sm:h-12 sm:w-12 mx-auto mb-4 opacity-50" />
+              <h3 className="text-base sm:text-lg font-medium mb-2">
                 {filter === "completed" ? "No completed tasks yet" 
                  : filter === "active" ? "No active tasks" 
                  : filter === "paused" ? "No paused tasks"
                  : "No tasks yet"}
               </h3>
-              <p className="text-sm">
+              <p className="text-xs sm:text-sm">
                 {filter === "all" && "Create your first task to get started!"}
                 {filter === "active" && "All tasks are either completed or paused."}
                 {filter === "paused" && "No tasks are currently paused."}

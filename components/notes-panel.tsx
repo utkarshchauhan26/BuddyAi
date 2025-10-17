@@ -281,49 +281,51 @@ export function NotesPanel({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 w-full">
       {/* Header with date navigation */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" onClick={() => changeDate('prev')}>
-            <ChevronLeft className="h-4 w-4" />
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
+          <Button variant="outline" size="sm" onClick={() => changeDate('prev')} className="px-2 sm:px-3">
+            <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
-          <div className="text-center">
-            <h2 className="font-semibold">{formatDate(selectedDate)}</h2>
-            <p className="text-sm text-muted-foreground">{selectedDate}</p>
+          <div className="text-center min-w-0">
+            <h2 className="font-semibold text-sm sm:text-base">{formatDate(selectedDate)}</h2>
+            <p className="text-xs sm:text-sm text-muted-foreground">{selectedDate}</p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => changeDate('next')}>
-            <ChevronRight className="h-4 w-4" />
+          <Button variant="outline" size="sm" onClick={() => changeDate('next')} className="px-2 sm:px-3">
+            <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Note
+            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 w-full sm:w-auto">
+              <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+              <span className="text-sm sm:text-base">Add Note</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-full sm:max-w-2xl mx-2 sm:mx-auto max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingNote ? 'Edit Note' : 'Add New Note'}</DialogTitle>
+              <DialogTitle className="text-lg sm:text-xl">{editingNote ? 'Edit Note' : 'Add New Note'}</DialogTitle>
             </DialogHeader>
             
-            <div className="space-y-4">
+            <div className="space-y-4 py-2">
               <Input
                 placeholder="Note title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                className="text-sm sm:text-base"
               />
               
               <Textarea
                 placeholder="What's on your mind today?"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                rows={8}
+                rows={6}
+                className="text-sm sm:text-base resize-none"
               />
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">Mood</label>
                   <Select value={mood} onValueChange={(value) => setMood(value as Note['mood'])}>
